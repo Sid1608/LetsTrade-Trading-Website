@@ -1,0 +1,89 @@
+body{
+    background:radial-gradient(#e5e5e5,#ffff,#e5e5e5);;
+}
+
+.card{
+    width: 18rem;
+    height: 340px;
+    justify-content: space-between;
+}
+
+.card:hover{
+    box-shadow:5px 10px 20px 1px rgba(0,0,0,0.253)!important;
+}
+
+.card-body{
+    padding: 3rem 0 !important;
+}
+
+.card-text{
+    font-size: .9rem;
+    padding: 0.4rem 1.9rem;
+}
+
+.container-fluid.row{
+    padding-top: 6rem;
+}
+.company_card{
+    margin-bottom: 12px;
+}
+
+.div_info{
+    margin-left: 7px;
+}
+.div_info>label{
+    font-size: 10px;
+    font-weight: 200px;
+    padding-bottom: -100px;
+    
+}
+
+.info_companyName_input{
+    width:300px
+}
+.info_Category_input{
+    width:300px;
+    height:35px;
+    margin-bottom:10px;
+}
+.info_quantity{
+    margin-left: 170px;
+    margin-top: -55px;
+}
+.info_quantity_input{
+    width:140px;
+    margin-bottom: 10px;
+    height:35px;
+}
+.info_name_input{
+    width:140px;
+    margin-bottom: 10px;
+}
+.info_email{
+    margin-left:170px ;
+    margin-top: -67px;
+
+}
+.info_email_input{
+    width: 140px;
+    margin-bottom: 10px;
+}
+.info_buysell_input{
+    width:140px;
+    height:35px;
+}
+.info_phoneNumber_input{
+    width:300px;
+}
+/* .send-button{
+    widht:50px;
+} */
+
+@media only screen and (min-width: 1200px) {
+    .card{
+        width: 20rem;
+        height: 320px;
+        justify-content: space-between;
+    }
+
+}

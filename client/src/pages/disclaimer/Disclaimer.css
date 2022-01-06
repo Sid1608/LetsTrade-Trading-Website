@@ -1,0 +1,27 @@
+.disclaimer_heading{
+    margin-top: 100px;
+}
+.disclaimer_data{
+    margin-top: 0px; margin-right: 0px; margin-left: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: baseline; word-wrap: break-word; text-align: center; margin-bottom: 0px !important;
+}
+.section-title {
+    text-align: center;
+    padding-bottom: 5px;
+    margin-top: 10px;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.disclaimer_body{
+    /* margin-top: 1000px; */
+    padding: 50px;
+}
+/* li {
+    display: list-item;
+    list-style-position: inside;
+  }
+   */

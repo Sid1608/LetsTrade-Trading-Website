@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+/* .Content{
+    object-fit: contain;
+   
+    
+} */
+/*Section 1*/
+.section1{
+ margin:100px 50px;
+}
+.aboutSection1_image{
+    width: 500px;
+}
+/* .whyus{
+  height: 300px;
+  width:900px
+} */
+
+.Aboutus_content{
+    height: 400px;
+    width: 700px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border-radius: 10px;
+    align-items: center;
+    padding: 20px;
+    /* margin-left: 10%; */
+    /* background-color: #FEC601; */
+    /* margin-top: 10%; */
+}
+.Aboutus_content:hover {
+    /* background: #303ef7; */
+    background: #FEC601;
+
+    color: black;
+    transform: scale(1.05);
+  }
+  
+.aboutus{
+        margin-top: 100px;
+        /* width:1000px;
+        height:1000px; */
+        /* box-shadow: 0 3px 6px rgba(121, 109, 109, 0.16), 0 3px 6px rgba(0,0,0,0.23); */
+        /* border-radius: 10px;
+        background-color: white;
+        margin-left: 10%;
+       align-items: center; */
+}
+/*Section 2*/
+.section2{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.team{
+    flex-direction: column;
+    
+}
+.team_members{
+    display: flex;
+    align-items: center;
+    margin-left: 500px;
+}
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.OurServices {
+  width: 100%;
+  height: 100%;
+  padding: 0px 8%;
+}
+
+ .OurServices h1 {
+  text-align: center;
+  padding-top: 10%;
+  margin-bottom: 60px;
+  font-weight: 600;
+  position: relative;
+} 
+
+.OurServices h1::after {
+  content: '';
+  background:#FEC601;
+  width: 100px;
+  height: 5px;
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.OurServicesRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 30px;
+}
+
+.service {
+  text-align: center;
+  padding: 25px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+  transition: transform 0.5s, background 0.5s;
+}
+
+.service i {
+  font-size: 40px;
+  margin-bottom: 10px;
+  /* color: #303ef7; */
+  color:#FEC601;
+}
+
+.service h2 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.service:hover {
+  /* background: #303ef7;
+  color: #fff; */
+  background: #FEC601;
+
+    color: black;
+  transform: scale(1.05);
+}
+
+.service:hover i {
+  color: #fff;
+} 
+.icon-box {
+  padding: 40px 20px 10px 20px;
+  margin-top: 35px;
+  margin-bottom: 5px;
+  text-align: center;
+  height: 80%;
+  position: relative;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 7px 7px 29px #d9d9d9, -7px -7px 29px #ffffff;
+}
+.startupinvesting{
+  margin-left: 320px;
+}
+.icon-box:hover .icon {
+  background: #fff;
+  border: 2px solid #2d6aa0;
+}
+/**************** Media query for mobile size screen*************************/
+@media only screen and (max-width: 600px) {
+  .whyus{
+    height: 900px;
+  }
+  .ourPurpose{
+    height: 600px;
+  }
+  .startupinvesting{
+    margin-left: 0px;
+  }
+
+}

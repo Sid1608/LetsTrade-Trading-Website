@@ -1,0 +1,10 @@
+.admin__headerImage{
+    height:40px ;
+    /* width: 20px; */
+
+}
+.admin__login{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

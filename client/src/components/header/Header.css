@@ -1,0 +1,100 @@
+/* /* #nav-content{
+    display: flex;
+    justify-content: space-between;
+}
+#nav-logo{
+    height: 40px;
+} */
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap'); */
+
+/* #nav-container, #nav-content, #nav-links{
+    display: flex !important;
+}
+
+#nav-container, #nav-content, #nav-links {
+    flex-direction: row !important;
+}
+
+#nav-container {
+    justify-content: center !important;
+    position: sticky;
+}
+
+#nav-content, #nav-links {
+    justify-content: space-between !important;
+}
+
+#nav-container, #nav-content{
+    align-items: center !important;
+}
+
+
+#nav-container{
+    height: 60px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0px 5px 4px -5px grey !important;
+}
+
+#nav-content{
+    width: 60%;
+}
+
+#nav-logo{
+    height: 40px;
+}
+
+#nav-links{
+    width: 50%;
+    font-size: 1.3rem;
+}
+
+.nav-link-selected {
+    border-bottom: 1px solid #FEC601;
+}
+
+.nav-link{
+    cursor: pointer;
+} */ 
+#nav-logo{
+    height: 40px;
+}
+.header_nav{
+    display: flex;
+    justify-content: space-between;
+}
+.headerSpaceBetween{
+    margin-left:300px;
+    /* background-color: black; */
+}
+@media only screen and (min-width: 1200px) {
+    .headerSpaceBetween{
+        margin-left:500px
+    }
+    .toggleSpace{
+        margin-left: -100px;
+    }
+    
+}
+@media only screen and (min-width: 1000px) {
+   
+    .toggleSpace{
+        margin-left: -100px;
+    }
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .headerSpaceBetween{
+        margin-left:20px;
+        /* margin-right: 100px; */
+        /* background-color: black; */
+    }
+    .toggleSpace{
+        margin-left: -100px;
+    }
+    .navsize{
+        width:370px;
+    }
+    
+}
