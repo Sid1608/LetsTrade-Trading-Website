@@ -4,6 +4,7 @@ import './css/Shareholding.css'
 import FormData from 'form-data'
 import { Header, Image, Segment,Button,Input } from 'semantic-ui-react'
 import { storage, db} from "../../../firebase";
+import axios from "axios"
 // import {PieChart,Pie,Tooltip} from "recharts";
 function Shareholdings({company,id}) {
     const [user,setUser]=useState(null); 

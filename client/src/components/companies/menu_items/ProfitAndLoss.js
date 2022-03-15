@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { storage, db} from "../../../firebase";
 import { Card, Input, Image, Header, Segment, Button } from 'semantic-ui-react'
 import "./css/ProfitAndLoss.css"
+import axios from "axios"
 function ProfitAndLoss({profitloss,id}) {
     const [images,setImages] = useState([]);
     // const [profitloss,setpl]=useState([])

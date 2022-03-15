@@ -3,7 +3,7 @@ import { Header, Image, Segment } from 'semantic-ui-react'
 import './css/about.css'
 import './FinancialSnapshot'
 import FinancialSnapshot from './FinancialSnapshot'
-
+import axios from "axios"
 // import "./node_modules/bootstrap/dist/css/bootstrap.min.css"
 function Financials({company}) {
     

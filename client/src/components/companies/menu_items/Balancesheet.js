@@ -4,7 +4,7 @@ import { storage, db} from "../../../firebase";
 import firebase from "firebase"
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { Card, Input, Image, Header, Segment, Button } from 'semantic-ui-react'
-
+import axios from "axios"
 
 function Balancesheet({ balancesheets,id}) {
     const [images,setImages] = useState([]);

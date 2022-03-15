@@ -36,7 +36,11 @@ const cards = [
   },
 ];
 
+const whyInvest={
+
+}
 function Home() {
+
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -82,11 +86,7 @@ function Home() {
       <div className="home__section1">
         <div class="container-fluid " style={{ paddingTop: "10px" }}>
           <nav class="navbar  navbar-expand-lg navbar-dark">
-            {/* <a class="navbar-brand" href="" id="d">
-              Iris-Capital
-            </a> */}
-
-            <button
+            {/* <button
               class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -96,7 +96,7 @@ function Home() {
               aria-label="Toggle navigation"
             >
               <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> */}
             <div
               class="collapse navbar-collapse justify-content-end"
               id="navbarSupportedContent"
@@ -199,25 +199,15 @@ function Home() {
                   </li>
                 </ul>
               </div>
-              {/* <img class="title-image" src="https://image.shutterstock.com/image-vector/phone-screen-financial-trading-graph-600w-1950491206.jpg" alt="iphone-mockup"/> */}
+             
             </div>
           </div>
-          {/* <div>
-          <div id="big-letters" className="home__title">
-            <h1>Buy And Sell</h1>
-            <br />
-            <h2> Unlisted And Pre-Ipo Shares</h2>
-          </div>
-          <div className="home__section1Button">
-          <button type="button" class="btn btn-dark btn-lg download-button" onClick={handleClick}>
-          Explore Companies<ExploreIcon/></button>
-          
-          </div>
-
-        </div>
-         */}
         </div>
       </div>
+
+
+
+      {/* Cards */}
       <div className="home__section2" id="ourServices">
         <div className="row cards">
           {/* <Card.Group itemsPerRow={4}> */}
@@ -237,9 +227,10 @@ function Home() {
               </div>
             );
           })}
-          {/* </Card.Group> */}
         </div>
       </div>
+
+      {/* Why Invest */}
       <section class="ptb-100 pb-0 unlisted_content" id="whyInvest">
         <div class="container">
           <div class="row align-items-center justify-content-between pb-5">

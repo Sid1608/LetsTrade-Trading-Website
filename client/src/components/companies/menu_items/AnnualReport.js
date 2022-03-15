@@ -5,6 +5,7 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import firebase from "firebase";
 import { storage, db } from "../../../firebase";
 import { Input, Image, Segment, Button } from "semantic-ui-react";
+import axios from "axios"
 
 function AnnualReport({ pdfs, id }) {
   const [progress, setProgress] = useState(0);

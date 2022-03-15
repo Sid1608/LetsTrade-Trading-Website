@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import "./css/Financial.css"
 import firebase from "firebase"
-
+import axios from "axios"
 function FinancialSnapshot({company}) {
     const [Snapshots,setSnapshots] = useState("");
     const [url, setUrl]=useState("");
