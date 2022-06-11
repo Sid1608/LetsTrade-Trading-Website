@@ -35,7 +35,7 @@ app.get("/",(req,res)=>{
 
 
 app.listen(8081,()=>{
-    console.log("Server started on port 8080");
+    console.log("Server started on port 8081");
 })
 
 // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!

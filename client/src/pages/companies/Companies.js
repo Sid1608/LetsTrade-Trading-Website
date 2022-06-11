@@ -33,7 +33,7 @@ function Companies(props) {
 
   useEffect(() => {
 
-    axios.get("http://localhost:8080/api/company/allCompany/")
+    axios.get("http://localhost:8081/api/company/allCompany/")
       .then(response => {
         setCompanies(response.data.companies)
         // console.log(response.data.companies)

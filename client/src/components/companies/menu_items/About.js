@@ -5,19 +5,13 @@ import {db } from "../../../firebase";
 import firebase from "firebase";
 import axios from "axios";
 function About({ company}) {
+  console.log(company)
   const [about, setAbout] = useState("");
   const [id, setId] = useState(null);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // db.collection("companies").onSnapshot((snapshot) => {
-    //   snapshot.docs.map((doc) => {
-    //     if (doc.data().Name === company.Name) {
-    //       setId(doc.id);
-    //     }
-    //   });
-    // });
-
+  
     let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn) => {
       if (isLoggedIn) {
         setUser(isLoggedIn);
@@ -28,8 +22,8 @@ function About({ company}) {
   }, []);
 
   const updateAbout = () => {
-    console.log(id);
-    axios.patch(`http://localhost:8080/api/company/updateAboutUs/${company._id}`)
+    console.log(company._id);
+    axios.patch(`http://localhost:8081/api/company/updateAboutUs/${company._id}`)
                 .then(response=>{
                     console.log(response)
                 })

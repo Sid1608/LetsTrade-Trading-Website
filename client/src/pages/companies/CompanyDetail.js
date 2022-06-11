@@ -102,7 +102,7 @@ function CompanyDetail(props){
     useEffect(()=>{
             const slug = props.match.params.slug
             console.log(slug);
-            axios.get(`http://localhost:8080/api/company/${slug}`)
+            axios.get(`http://localhost:8081/api/company/${slug}`)
               .then(response=>{
                 console.log(response.data.company);
 
@@ -223,9 +223,9 @@ function CompanyDetail(props){
                   <Input
                     placeholder="Company Name"
                     type="text"
-                    className="inputButton"
+                    // className="inputButton"
                     value={state.company.Name}
-                    className="info_companyName_input"
+                    className="inputButon info_companyName_input"
                     name="CompanyName"
                     // onChange={(e)=>setPassword(e.target.value)}
                   />
@@ -236,11 +236,11 @@ function CompanyDetail(props){
                   <select
                     id="cars"
                     name="cars"
-                    className="inputButton"
+                    // className="inputButton"
                     onChange={(e)=>{
                       setCategory(e.target.value)
                     }}
-                    className="info_Category_input"
+                    className="inputButton info_Category_input"
                   >
                     <option value="Family Office">Family Office</option>
                     <option value="Wealth Management">Wealth Management</option>
@@ -256,11 +256,11 @@ function CompanyDetail(props){
                   <select
                     id="cars"
                     name="bs"
-                    className="inputButton"
+                    // className="inputButton"
                     onChange={(e)=>{
                       setbs(e.target.value)
                     }}
-                    className="info_buysell_input"
+                    className="inputButton info_buysell_input"
                   >
                     <option value="Buy">Buy</option>
                     <option value="Sell">Sell</option>
@@ -270,13 +270,13 @@ function CompanyDetail(props){
                   <label for="cars">Quantity</label>
                   <br />
                   <Input
-                    className="inputButton"
+                    // className="inputButton"
                     placeholder="Quantity"
                     type="number"
                     // value={Q}
                     name="Quantity"
                     onChange={(e) => setQuantity(e.target.value)}
-                    className="info_quantity_input"
+                    className="inputButton info_quantity_input"
                     required
                   />
                 </div>
@@ -289,8 +289,8 @@ function CompanyDetail(props){
                     type="text"
                     // value={username}
                     name="username"
-                    className="inputButton"
-                    className="info_name_input"
+                    // className="inputButton"
+                    className="inputButton info_name_input"
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
@@ -299,13 +299,13 @@ function CompanyDetail(props){
                   <label for="cars">Email*</label>
                   <br />
                   <Input
-                    className="inputButton"
+                    // className="inputButton"
                     placeholder="Email"
                     type="email"
                     // value={email}
                     name="email"
                     onChange={(e) => setEmail(e.target.value)}
-                    className="info_email_input"
+                    className="inputButton info_email_input"
                     required
                   />
                 </div>
@@ -316,10 +316,10 @@ function CompanyDetail(props){
                     placeholder="Mobile No"
                     type="tel"
                     name="MobileNo"
-                    className="inputButton"
+                    // className="inputButton"
                     // value={password}
                     onChange={(e) => setMobileNo(e.target.value)}
-                    className="info_phoneNumber_input"
+                    className="inputButton info_phoneNumber_input"
                     required
                   />
                 </div>
