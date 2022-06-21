@@ -1,7 +1,7 @@
 const router=require("express").Router();
 const User=require("../models/User");
 const bcrypt = require("bcrypt");//asynchronous function 
-
+const jwt=require("jsonwebtoken");
 //Register
 router.post("/register",async (req,res)=>{
     
@@ -17,9 +17,18 @@ router.post("/register",async (req,res)=>{
         })
         //save user and respond
         const user=await newUser.save();
+        const token = jwt.sign(
+            { user_id: user._id, username:user.username,email:user.email },
+            process.env.TOKEN_KEY,
+            {
+              expiresIn: "10h",
+            }
+          );
+          // save user token
+          user.token = token;
         res.status(200).json(user);
     }catch(err){
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 });
 
@@ -31,6 +40,16 @@ router.post("/login",async (req,res)=>{
         !user && res.status(404).send("oops user not found!");
         const validPassword=await bcrypt.compare(req.body.password,user.password);
         !validPassword && res.status(400).json("wrong password")
+        const token = jwt.sign(
+            { user_id: user._id, username:user.username,email:user.email },
+            process.env.TOKEN_KEY,
+            {
+              expiresIn: "10h",
+            }
+          );
+    
+          // save user token
+          user.token = token;
         res.status(200).json(user);
     }catch(err){
         res.status(500).json(err)
