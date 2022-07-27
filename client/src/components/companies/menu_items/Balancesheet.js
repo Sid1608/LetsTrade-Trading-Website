@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import { storage, db} from "../../../firebase";
 import firebase from "firebase"
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
@@ -88,7 +88,7 @@ function Balancesheet({ balancesheets,id}) {
         //   }
         // );
         // alert("added");
-        return <Redirect to={`${"/companies/"}${id}`} />
+        return <Navigate to={`${"/companies/"}${id}`} />
 
         }else{
           alert("NO Image selected")

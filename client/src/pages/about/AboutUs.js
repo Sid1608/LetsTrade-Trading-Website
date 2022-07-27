@@ -40,6 +40,8 @@ function AboutUs(props) {
             <Image
               className="aboutSection1_image"
               src="https://www.swastika.co.in/public/webtheme/images/share-trading/share-trad.png"
+              // src="../../../../uploads/2022-06-11T12-16-38.158Zanand_rathi.png"
+      
             />
           </div>
           <div className="Aboutus_content whyus col-lg-6 col-sm-12">

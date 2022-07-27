@@ -47,7 +47,7 @@ function Footer() {
               <li><strong>contact 1:</strong> +91 8824885175</li>
               <li><strong>contact 2:</strong> +91 9214699506</li>
               <li><strong>Email:</strong>akarsiddharth@gmail.com</li>
-              <li><strong>Address:</strong> ast, Mumbai, Maharastra 400076</li>
+              <li><strong>Address:</strong> 3187 akar bhawan chandpole bazar jaipur</li>
             </ui>
           </div>
         </div>

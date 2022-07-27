@@ -53,6 +53,14 @@ function Header(props) {
     window.location.replace(`${"/"}${tab["path"]}`);
   };
   const { match } = props;
+  const handleLogout=()=>{
+    localStorage.removeItem("token")
+    
+    localStorage.removeItem("isLoggedIn");
+    props.setUser(false)
+    console.log("in logout")
+    window.location.reload()
+  }
   return (
     <div className="headerContainer" >
       <Navbar bg="dark" expand="lg" variant="dark" fixed="top" className="py-3 navsize">
@@ -89,6 +97,10 @@ function Header(props) {
               <Nav.Link style={{ color: "white" }} href="/blogs">
                 Blogs
               </Nav.Link>
+              <Nav.Link style={{ color: "white" }} onClick={handleLogout}>
+                Logout
+              </Nav.Link>
+
 
               {/* <NavDropdown title="Refferal" id="basic-nav-dropdown">
                
@@ -103,11 +115,11 @@ function Header(props) {
                 
                </NavDropdown> */}
             </Nav>
-            <Nav className="ml-auto">
+            {/* <Nav className="ml-auto">
               <Nav.Link style={{ color: "white" }}>
                 <AdminLogin />
               </Nav.Link>
-            </Nav>
+            </Nav> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

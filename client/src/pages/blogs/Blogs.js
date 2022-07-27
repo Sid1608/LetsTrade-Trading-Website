@@ -7,6 +7,7 @@ import { Avatar, IconButton } from '@mui/material';
 import ThumbUp from '@mui/icons-material/ThumbUp';
 const Blogs = () => {
     const [posts,setPosts]=useState([]);
+    //Getting  post of users
     useEffect(() => {
         axios.get("http://localhost:8081/api/posts/timeline/all").then(res => {
           console.log(res.data.posts)
@@ -25,24 +26,13 @@ const Blogs = () => {
             {
                 posts.map((post,i)=>{
                     return(
-                        <div>
-                            <hr/>
-                            <div>
-                                <Avatar/> <h1>Siddhart Akar</h1>
-                                <h1>{post.desc}</h1>
-                                <IconButton aria-label="delete">
-                                    <DeleteIcon />
-                                </IconButton>
-                                <IconButton aria-label="delete">
-                                    <ThumbUp/>
-                                </IconButton>
-                                
-                                
-                            </div>
-                           
-                        </div>
-                        
-                        // <blogPost post={post}/>
+                        <blogPost 
+                            key={post.id}
+                            name={post.name}
+                            description={post.desc}
+                            message={post.message}
+                            photoUrl={post.photoUrl}
+                        />
                     );
                 })
             }

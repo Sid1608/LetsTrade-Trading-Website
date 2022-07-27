@@ -1,6 +1,6 @@
-import React from "react";
-import {Route,Switch,BrowserRouter as Router} from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { useCookies } from 'react-cookie'
 import "bootstrap/dist/css/bootstrap.min.css";
 import Disclaimer from "./pages/disclaimer/Disclaimer"
 import HomeIcon from '@material-ui/icons/Home';
@@ -10,6 +10,7 @@ import Companies from "./pages/companies/Companies";
 import CompanyDetail from "./pages/companies/CompanyDetail";
 import AboutUs from "./pages/about/AboutUs";
 import Blogs from "./pages/blogs/Blogs";
+import Login from "./pages/login/Login";
 import AdminLogin from "./components/admin/AdminLogin";
 import ChannelPartner from "./components/channelPartner/ChannelPartner"
 import {Link} from "react-router-dom"
@@ -17,6 +18,10 @@ import Home from "./pages/home/Home";
 import { Button ,Card} from '@material-ui/core';
 import "./App.css";
 import Header from "./components/header/Header";
+import Signup from "./pages/signup/Signup";
+import ForgotPassword from "./components/forgotPassword/ForgotPassword";
+import PasswordReset from "./components/passwordReset/PasswordReset";
+import EmailVerify from "./components/emailVerify/EmailVerify";
 
 const nav_links = [
   {
@@ -52,54 +57,74 @@ const nav_links = [
 ];
 
 function App(props) {
-
- console.log(props.match.path);
-  const handleNavClick = (tab) => {
-    window.location.replace(`${props.match.path}${tab["path"]}`);
-  };
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+  const [user, setUser] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+//  console.log(props.match.path);
+  // const handleNavClick = (tab) => {
+  //   window.location.replace(`${props.match.path}${tab["path"]}`);
+  // };
   const { match } = props;
-
+  // const user=false
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn")===true) {
+      setUser(true);
+      // setIsAdmin(JSON.parse(localStorage.getItem("isAdmin")));
+    }
+  },[]);
+  console.log(user);
 
   return (
-    
+    <BrowserRouter>
     <div >
-      <Header/>
-      <Router>
-        <Switch>
-          {nav_links.map((page, index) => {
-            return (
-              <Route
-                exact
-                key={index}
-                path={`${match.path}${page.path}`}
-                // path={`{"/"}${page.path}`}
-                component={page.component}
-              />
-            );
-          })}
-          <Route
-            exact
-            path={`${match.path}companies/:slug/`}
-            component={CompanyDetail}
-          />
-          <Route exact path="/about">
-            <AboutUs/>
-          </Route>
-          <Route exact path="/blogs">
-            <Blogs/>
-          </Route>
-          <Route exact path="/disclaimer">
-            <Disclaimer/>
-          </Route>
-          <Route
-            exact
-            path="/"
-            component={Home}
-          />
+      {
+        user&&(
+        <div style={{margin:"65px"}}>
+          <Header setUser={setUser}/>
+        </div>)
+      }
+      <Routes>
+          {user ?(
+            <>
+      
+                <Route exact path="/" element={<Home/>}/>
+                <Route exact path="/companies" element={<Companies/>}/>
+                <Route exact path="/contact" element={<ContactUs/>}/>
+                <Route  exact  path={`companies/:slug/`} element={<CompanyDetail/>}/>
+                <Route exact path="/about" element={<AboutUs/>}/>
+                <Route exact path="/blogs" element={<Blogs/>}/>
+                <Route exact path="/disclaimer" element={<Disclaimer/>}/>
+                {/* <Route exact path="/login" element={<Login/>}/> */}
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/password-reset/:id/:token" element={<PasswordReset />} />
+                <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
+
+            </> 
+
+          ):(
+            <>
+              <Route exact path={"/"} element={<Navigate replace to="/login"/>}/>
+              <Route exact path="/companies" element={<Navigate replace to="/login"/>}/>
+              <Route exact path="/contact" element={<Navigate replace to="/login"/>}/>
+              <Route  exact  path={`companies/:slug/`} element={<Navigate replace to="/login"/>}/>
+              <Route exact path="/about" element={<Navigate replace to="/login"/>}/>
+              <Route exact path="/blogs" element={<Navigate replace to="/login"/>}/>
+              <Route exact path="/disclaimer" element={<Navigate replace to="/login"/>}/>
+              <Route exact path="/login" element={<Login setUser={setUser} setIsAdmin={setIsAdmin}/>}/>
+              <Route exact path="/signup" element={<Signup/>}/>
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/password-reset/:id/:token" element={<PasswordReset />} />
+              <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
+            
+            
+            </>
+          )}
+         
           
-        </Switch>
-      </Router>
+          
+      </Routes>
     </div>
+    </BrowserRouter>
   );
 }
 

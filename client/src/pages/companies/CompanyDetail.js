@@ -1,7 +1,7 @@
 import React, {  useState, useEffect } from 'react'
 import { db} from "../../firebase";
 import { Input, Button, Divider, Menu } from 'semantic-ui-react'
-import { Redirect } from 'react-router-dom'
+import { Navigate,useLocation } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css";
 import FloatingWhatsApp from 'react-floating-whatsapp'
 import firebase from 'firebase';
@@ -75,6 +75,7 @@ function CompanyDetail(props){
   // const classes = useStyles();
     // console.log(props);
   const classes=useStyles();
+  const location=useLocation();
   const [modalStyle]=useState(getModalStyle);
   const [open, setOpen]=useState(false);
   const [username,setUsername]=useState("");
@@ -100,7 +101,10 @@ function CompanyDetail(props){
   }
   const [companyLogo,setCompanylogo]=useState("");
     useEffect(()=>{
-            const slug = props.match.params.slug
+            let currLoc=location.pathname;
+            console.log(currLoc)
+            const arr = currLoc.split("/");
+            const slug = arr[2]
             console.log(slug);
             axios.get(`http://localhost:8081/api/company/${slug}`)
               .then(response=>{
@@ -201,7 +205,7 @@ function CompanyDetail(props){
         const { error, company, activeMenuItem } =state
             if (error) {
                 return (
-                    <Redirect to="/companies" exact />
+                    <Navigate to="/companies" exact />
                 )
             }
         return (

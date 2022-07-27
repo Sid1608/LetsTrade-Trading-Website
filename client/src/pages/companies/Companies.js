@@ -198,9 +198,11 @@ function Companies(props) {
         
       
       } */}
+      
         <CompanyCard cards={filteredCompanies} />
       </div>
       <div className="companies__footer">
+      
         <Footer />
         {/* <footer className = "d-block" >
         <p className = "text-center" > ©Copyright 2021 </p> 

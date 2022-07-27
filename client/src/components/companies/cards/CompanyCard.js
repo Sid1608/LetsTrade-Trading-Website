@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import axios from "axios"
 
+
 import { Button, CardActionArea, CardActions } from "@mui/material";
 function getModalStyle() {
   const top = 50;
@@ -67,6 +68,7 @@ function CompanyCard({ cards }) {
   const [company, setCompany] = useState("");
   console.log(cards);
   useEffect(() => {
+    console.log(cards)
     let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn) => {
       if (isLoggedIn) {
         setUser(isLoggedIn);
@@ -100,9 +102,9 @@ function CompanyCard({ cards }) {
                   <Input
                     placeholder="Company Name"
                     type="text"
-                    className="inputButton"
+                    // className="inputButton"
                     value={company}
-                    className="info_companyName_input"
+                    className="inputButton info_companyName_input"
                     name="CompanyName"
                     // onChange={(e)=>setPassword(e.target.value)}
                   />
@@ -113,12 +115,12 @@ function CompanyCard({ cards }) {
                   <select
                     id="cars"
                     name="cars"
-                    className="inputButton"
+                    // className="inputButton"
                     placeholder="option"
                     onChange={(e)=>{
                       setCategory(e.target.value)
                     }}
-                    className="info_Category_input"
+                    className="inputButton info_Category_input"
                   >
                     <option value="Buy">Family Office</option>
                     <option value="Sell">Wealth Management</option>
@@ -134,12 +136,12 @@ function CompanyCard({ cards }) {
                   <select
                     id="cars"
                     name="cars"
-                    className="inputButton"
+                    // className="inputButton"
                     onChange={(e)=>{
                       setbs(e.target.value)
                     }}
                     placeholder="option"
-                    className="info_buysell_input"
+                    className="inputButton info_buysell_input"
                   >
                     <option value="Buy">Buy</option>
                     <option value="Sell">Sell</option>
@@ -149,13 +151,13 @@ function CompanyCard({ cards }) {
                   <label for="cars">Quantity</label>
                   <br />
                   <Input
-                    className="inputButton"
+                    // className="inputButton"
                     placeholder="Quantity"
                     type="number"
                     // value={Q}
                     name="Quantity"
                     onChange={(e) => setQuantity(e.target.value)}
-                    className="info_quantity_input"
+                    className="inputButton info_quantity_input"
                     required
                   />
                 </div>
@@ -168,8 +170,8 @@ function CompanyCard({ cards }) {
                     type="text"
                     // value={username}
                     name="username"
-                    className="inputButton"
-                    className="info_name_input"
+                    // className="inputButton"
+                    className="inputButton info_name_input"
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
@@ -178,13 +180,13 @@ function CompanyCard({ cards }) {
                   <label for="cars">Email*</label>
                   <br />
                   <Input
-                    className="inputButton"
+                    // className="inputButton"
                     placeholder="Email"
                     type="email"
                     // value={email}
                     name="email"
                     onChange={(e) => setEmail(e.target.value)}
-                    className="info_email_input"
+                    className="inputButton info_email_input"
                     required
                   />
                 </div>
@@ -195,10 +197,10 @@ function CompanyCard({ cards }) {
                     placeholder="Mobile No"
                     type="tel"
                     name="MobileNo"
-                    className="inputButton"
+                    // className="inputButton"
                     // value={password}
                     onChange={(e) => setMobileNo(e.target.value)}
-                    className="info_phoneNumber_input"
+                    className="inputButton info_phoneNumber_input"
                     required
                   />
                 </div>
@@ -223,17 +225,20 @@ function CompanyCard({ cards }) {
         </div>
       </Modal>
       <div class="row">
+      
         {cards.map((company ) => {
           return (
+            
             <div class=" col-lg-3 col-md-4 col-sm-12  company_card">
               <Card  sx={{ maxWidth: 345 ,minWidth:100}} className="card" >
                 <CardMedia
                   component="img"
                   height="140"
                   style={{ objectFit: "contain" }}
-                  image={company.CompanyLogo}
+                  image={`../../../../../uploads/${company.CompanyLogo.substring(8)}`}
                   alt="green iguana"
                 />
+                
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {company.CompanyName}
@@ -271,7 +276,7 @@ function CompanyCard({ cards }) {
                     <button
                       className="deletebtn"
                       onClick={(e) => {
-                        axios.delete(`http://localhost:8080/api/company/deleteCompany/${company._id}`)
+                        axios.delete(`http://localhost:8081/api/company/deleteCompany/${company._id}`)
                           .then(response=>{
                             console.log(response);
                           })
