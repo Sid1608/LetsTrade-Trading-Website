@@ -9,6 +9,7 @@ const userRoute=require("./routes/users");
 const authRoute=require("./routes/auth");
 const postRoute=require("./routes/posts");
 const companyRoute=require("./routes/companies");
+// const passwordResetRoutes = require("./routes/passwordReset");
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/api/users", userRoute);
 app.use("/api/auth",authRoute);
 app.use("/api/posts",postRoute);
 app.use("/api/company",companyRoute);
+// app.use("/api/password-reset", passwordResetRoutes);
 
 app.get("/",(req,res)=>{
     res.send("welcome to home page")

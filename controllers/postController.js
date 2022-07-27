@@ -64,7 +64,7 @@ exports.GetPost=async(req,res)=>{
 exports.GetPosts=async(req,res)=>{
     // let postArray=[];
     try {
-        const posts=await Post.find();
+        const posts=await Post.find().populate("userId")
         res.status(200).json({posts:posts});
         // const currentUser=await User.findById(req.body.userId);
         // const userPosts=await Post.find({userId:currentUser._id})

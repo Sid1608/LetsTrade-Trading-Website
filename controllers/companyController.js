@@ -80,6 +80,19 @@ exports.UploadShareHoldings=async(req,res)=>{
         res.status(500).json({status: 'not able to update',error:err});
     }
 }
+exports.UploadCompanyLogo=async(req,res)=>{
+    try{
+        
+        const companyId=req.params.companyId;
+        const response=await Company.updateOne({_id:companyId},{$set:{CompanyLogo:req.file.path}});
+        res.status(201).json({status:"updated successfully"});
+
+    }catch(err){
+        console.log('kya hua')
+        console.log(req.file);
+        res.status(500).json({status: 'not able to update',error:err});
+    }
+}
 exports.UploadBalancesheets=async(req,res)=>{
     try{
         
@@ -132,11 +145,11 @@ exports.DeleteCompany=async(req,res)=>{
 exports.LikeCompany=async(req,res)=>{
     try{
         const company=await  Company.findById(req.params.CompanyId);
-        if(!company.likes.includes(req.body.userId)){
-            await company.updateOne({$push:{likes:req.body.userId}})
+        if(!company.Like.includes(req.body.userId)){
+            await company.updateOne({$push:{Like:req.body.userId}})
             res.status(200).json("The Company has been liked")
         }else{
-            await company.updateOne({$pull:{likes:req.body.userId}})
+            await company.updateOne({$pull:{Like:req.body.userId}})
             res.status(200).json("The Comapany has been disliked")
         }
     }catch(err){
