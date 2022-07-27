@@ -50,6 +50,7 @@ router.post("/uploadShareholdings/:companyId",upload.single('Shareholdings'),com
 router.post("/uploadBalancesheets/:companyId",upload.single('Balancesheets'),companyController.UploadBalancesheets);
 router.post("/uploadProfitAndLoss/:companyId",upload.single('ProfitAndLoss'),companyController.UploadProfitAndLoss);
 router.post("/uploadAnnualReports/:companyId",upload.single('AnnualReports'),companyController.UploadAnnualReports);
+router.post("/uploadCompanyLogo/:companyId",upload.single('CompanyLogo'),companyController.UploadCompanyLogo);
 
 
 router.delete("/deleteCompany/:companyId",companyController.DeleteCompany);
