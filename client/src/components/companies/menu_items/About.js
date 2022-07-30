@@ -10,6 +10,7 @@ function About({ company }) {
   const [about, setAbout] = useState("");
   const [id, setId] = useState(null);
   const user=useSelector(state=>state.user.currentUser);
+  const currentCompany=useSelector((state) => state.company.currentCompany);
   const isAdmin=user?._doc?.isAdmin;
 
   useEffect(() => {
@@ -39,7 +40,7 @@ function About({ company }) {
     <div id="company-about-container" style={{ width: "955px" }}>
       <Segment>
         <h1>About the Company</h1>
-        <div dangerouslySetInnerHTML={{ __html: company.About }}></div>
+        <div dangerouslySetInnerHTML={{ __html: currentCompany.AboutUs }}></div>
       </Segment>
 
       {isAdmin && (

@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import { storage, db} from "../../../firebase";
 import firebase from "firebase";
 import "./AddCompany.css";
+
 function getModalStyle() {
     const top = 50 ;
     const left = 50 ;

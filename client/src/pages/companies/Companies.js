@@ -4,19 +4,22 @@ import CompanyCard from "../../components/companies/cards/CompanyCard";
 import FloatingWhatsApp from "react-floating-whatsapp";
 import "./css/Companies.css";
 import axios from "axios";
-import { useSelector } from 'react-redux';
+import { useSelector ,useDispatch} from 'react-redux';
 import AddCompany from "../../components/companies/AddCompany/AddCompany";
 // import AddIcon from '@mui/icons-material/Add';
 import firebase from "firebase";
 import Footer from "../../components/footer/Footer"
+import { getAllCompanies } from "../../redux/apiCalls";
 
 function Companies(props) {
   /********************************useState ******************************************/
-  const [companies, setCompanies] = useState([]);
+  // const [companies, setCompanies] = useState([]);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   
   // const [isAdmin,setIsAdmin]=useState(false);
+  const dispatch = useDispatch();
   const user=useSelector(state=>state.user.currentUser);
+  const companies=useSelector(state=>state.company.Companies)
   const isAdmin=user?._doc?.isAdmin;
   // console.log(user);
   // setIsAdmin(user?._doc?.isAdmin);
@@ -38,16 +41,17 @@ function Companies(props) {
 
   useEffect(() => {
 
-    axios.get("http://localhost:8081/api/company/allCompany/")
-      .then(response => {
-        setCompanies(response.data.companies)
-        // console.log(response.data.companies)
-      })
-      .catch(err=>{
-        console.log(err);
-      })
+    // axios.get("http://localhost:8081/api/company/allCompany/")
+    //   .then(response => {
+    //     setCompanies(response.data.companies)
+    //     // console.log(response.data.companies)
+    //   })
+    //   .catch(err=>{
+    //     console.log(err);
+    //   })
+      getAllCompanies(dispatch)
 
-      console.log(companies)
+      // console.log(companies)
     companies.map((element) =>
       setFilteredCompanies((preValue) => {
         return [...preValue, element];
@@ -121,8 +125,8 @@ function Companies(props) {
               avatar={
                 window.location.origin + "/profile_pics/rushi_bhanushali.png"
               }
-              phoneNumber="919892477213"
-              accountName="Rushi Bhanushali"
+              phoneNumber="91 8824885175"
+              accountName="Admin"
               statusMessage="Enter the message and our team will get back to you in 24 hours."
               darkMode="True"
             />

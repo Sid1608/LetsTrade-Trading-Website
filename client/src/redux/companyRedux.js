@@ -7,6 +7,7 @@ const  companySlice = createSlice({
        currentCompany:null, 
        isFetching:false,
        error:false,
+       Companies:null
     },
     reducers:{
         companyStart:(state)=>{
@@ -21,6 +22,18 @@ const  companySlice = createSlice({
             state.isFetching=false;
             state.error=true;
         },
+        companyAllStart:(state)=>{
+            state.isFetching=true;
+        },
+        companyAllSuccess:(state,action)=>{
+            state.isFetching=false;
+            state.Companies=action.payload;
+            state.error = false;
+        },
+        companyAllFailure:(state)=>{
+            state.isFetching=false;
+            state.error=true;
+        },
         
     },
 })
@@ -28,6 +41,7 @@ export const {
     companyStart,
     companySuccess,
     companyFailure,
+    companyAllFailure, companyAllStart, companyAllSuccess
   } = companySlice.actions;
 
 export default companySlice.reducer;

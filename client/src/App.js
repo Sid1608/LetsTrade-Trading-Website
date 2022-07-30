@@ -81,7 +81,7 @@ function App(props) {
     <div >
       {
         user&&(
-        <div style={{margin:"65px"}}>
+        <div style={{margin:"64px"}}>
           <Header/>
         </div>)
       }

@@ -1,9 +1,11 @@
 import { loginFailure, loginStart, loginSuccess,logout } from "./userRedux"
 import {companyFailure, companyStart, companySuccess} from "./companyRedux"
+import {companyAllFailure, companyAllStart, companyAllSuccess} from "./companyRedux"
 import {publicRequest} from "../axios";
 import { registerSuccess } from './userRedux';
 import { registerFailure } from './userRedux';
 import { registerStart } from './userRedux';
+import { addPostsFailure, addPostsStart, addPostsSuccess, postsAllFailure, postsAllStart, postsAllSuccess } from "./postsRedux";
 export const login =async (dispatch,user)=>{
     let isError={
         error:false,
@@ -76,6 +78,44 @@ export const register = async (dispatch, user) => {
     }catch(error){
         
         dispatch(companyFailure())
+    
+    }
+  }
+  export const getAllCompanies=async(dispatch)=>{
+    dispatch(companyAllStart());
+    try {
+        const res=await publicRequest.get("/company/allCompany/")
+        dispatch(companyAllSuccess(res.data.companies))
+        
+    }catch(error){
+        
+        dispatch(companyAllFailure())
+    
+    }
+  }
+  export const getAllPosts=async(dispatch)=>{
+    dispatch(postsAllStart());
+    try {
+        const res=await publicRequest.get("/posts/timeline/all")
+        console.log(res);
+        dispatch(postsAllSuccess(res.data.posts))
+        
+    }catch(error){
+        
+        dispatch(postsAllFailure())
+    
+    }
+  }
+  export const createPosts=async(dispatch,posts)=>{
+    dispatch(addPostsStart());
+    try {
+        const res=await publicRequest.post("/posts",posts)
+        // console.log(res);
+        dispatch(addPostsSuccess(res.data.posts))
+        
+    }catch(error){
+        
+        dispatch(addPostsFailure())
     
     }
   }
