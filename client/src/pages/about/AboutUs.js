@@ -47,7 +47,7 @@ function AboutUs(props) {
           <div className="Aboutus_content whyus col-lg-6 col-sm-12">
             <h2 style={{ marginBottom: "20px" }}>Why Us?</h2>
             <p>
-              We founded <strong>Iris Capital</strong> 3 years prior with the
+              We founded <strong>Lets trade</strong> 3 years prior with the
               quest to provide solutions to individuals by securing them
               financially. While striving to generate alpha for individuals
               associated with us we came across an Unlisted space where we
@@ -221,7 +221,7 @@ function AboutUs(props) {
         </div>
       </section>
 
-      <section>
+      {/* <section>
         <div class="container OurServices">
           <h1>Our Team</h1>
           <div class="row OurServicesRow">
@@ -279,7 +279,7 @@ function AboutUs(props) {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section>
         <div class="container OurServices" style={{ marginBottom: "20px" }}>

@@ -190,9 +190,10 @@ function Home() {
                 <ul className="footer-live-chat">
                   <li className="whatsup-block">
                     <FloatingWhatsApp
-                      avatar={window.location.origin + '/profile_pics/rushi_bhanushali.png'}
-                      phoneNumber="919892477213"
-                      accountName="Rushi Bhanushali"
+                      // avatar={window.location.origin + '/profile_pics/rushi_bhanushali.png'}
+                      avatar="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Photos.png"
+                      phoneNumber="918824885175"
+                      accountName="Admin"
                       statusMessage="Enter the message and our team will get back to you in 24 hours."
                       darkMode="True"
                     />

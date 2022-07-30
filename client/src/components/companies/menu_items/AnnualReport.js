@@ -6,27 +6,20 @@ import firebase from "firebase";
 import { storage, db } from "../../../firebase";
 import { Input, Image, Segment, Button } from "semantic-ui-react";
 import axios from "axios"
+import { useSelector } from 'react-redux';
 
 function AnnualReport({ pdfs, id }) {
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
   const [Reports, setReports] = useState("");
   const [report, setReport] = useState("");
-  const [user, setUser] = useState(null);
+  
   const [url, setUrl] = useState("");
   const [image, setImage] = useState(null);
 
   /********************************UseEffect*/
-  useEffect(() => {
-    console.log(id);
-    let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn) => {
-      if (isLoggedIn) {
-        setUser(isLoggedIn);
-      }
-    });
-    console.log(user);
-  }, []);
-
+  const user=useSelector(state=>state.user.currentUser);
+  const isAdmin=user?._doc?.isAdmin;
   /********************************Methods */
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -124,7 +117,7 @@ function AnnualReport({ pdfs, id }) {
       </Segment>
 
       
-      {user && (
+      {isAdmin && (
         <Segment>
           <progress
             className="imageupload__progress"

@@ -125,3 +125,9 @@
 .google_btn > span{
     margin-left: 10px;
 }
+.error_msg{
+    color:red;
+}
+.succ_msg{
+    color:green;
+}

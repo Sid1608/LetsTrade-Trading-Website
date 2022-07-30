@@ -3,8 +3,8 @@ import { Input} from "semantic-ui-react";
 import CompanyCard from "../../components/companies/cards/CompanyCard";
 import FloatingWhatsApp from "react-floating-whatsapp";
 import "./css/Companies.css";
-import { auth, db } from "../../firebase";
-import axios from "../../axios.js";
+import axios from "axios";
+import { useSelector } from 'react-redux';
 import AddCompany from "../../components/companies/AddCompany/AddCompany";
 // import AddIcon from '@mui/icons-material/Add';
 import firebase from "firebase";
@@ -14,7 +14,12 @@ function Companies(props) {
   /********************************useState ******************************************/
   const [companies, setCompanies] = useState([]);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
-  const [user, setUser] = useState(null);
+  
+  // const [isAdmin,setIsAdmin]=useState(false);
+  const user=useSelector(state=>state.user.currentUser);
+  const isAdmin=user?._doc?.isAdmin;
+  // console.log(user);
+  // setIsAdmin(user?._doc?.isAdmin);
   const [search, setSearch] = useState("");
   const [companyDetails, setCompanyDetails] = useState({
     companyName: "",
@@ -42,35 +47,18 @@ function Companies(props) {
         console.log(err);
       })
 
-    // db.collection("companies")
-    //   .orderBy("Name")
-    //   .onSnapshot((snapshot) => {
-    //     setCompanies(
-    //       snapshot.docs.map((doc) => ({
-    //         id: doc.id,
-    //         company: doc.data(),
-    //       }))
-    //     );
-    //   });
       console.log(companies)
     companies.map((element) =>
       setFilteredCompanies((preValue) => {
         return [...preValue, element];
       })
     );
-
     console.log(filteredCompanies);
 
-    let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn) => {
-      if (isLoggedIn) {
-        setUser(isLoggedIn);
-        console.log(isLoggedIn);
-        console.log("love");
-      }
-    });
-    console.log(user);
   }, []);
 
+
+  //search companies
   useEffect(() => {
     let cmp = [];
 
@@ -79,7 +67,6 @@ function Companies(props) {
         cmp.push(element);
       }
     });
-
     setFilteredCompanies([]);
     cmp.map((element) =>
       setFilteredCompanies((preValue) => {
@@ -121,8 +108,12 @@ function Companies(props) {
     }
   };
 
+
+  /**  return  */
   return (
     <div className="companies">
+
+      {/* floating whatsapp */}
       <div className="footer-sticky-popup">
         <ul className="footer-live-chat">
           <li className="whatsup-block">
@@ -135,13 +126,12 @@ function Companies(props) {
               statusMessage="Enter the message and our team will get back to you in 24 hours."
               darkMode="True"
             />
-            {/* <a href="https://api.whatsapp.com/send?phone=919137718552&amp;text=Hi%20Rushi,">
-            <Image  size="mini" src="https://cdn-icons-png.flaticon.com/512/1384/1384055.png" alt="whatsup"/>
-        </a> */}
           </li>
         </ul>
       </div>
-      {user ? (
+
+      {/* Add Company section */}
+      {isAdmin ? (
         <div className="companies__header">
           <div className="addButton">
             <AddCompany />
@@ -182,6 +172,8 @@ function Companies(props) {
         </div>
       )}
 
+
+      {/* Companies  */}
       <div className="companies__body">
       {/* {
         filteredCompanies.map(company=>{

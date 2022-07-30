@@ -4,25 +4,16 @@ import "./css/price.css"
 import { storage, db} from "../../../firebase";
 import axios from "axios";
 import firebase from "firebase"
+import { useSelector } from 'react-redux';
 
 function Price({company,id}) {
-
+        
         const [bp,setbp]=useState(0.00);
         const [sp,setsp]=useState(0.00)
 
-        const [user,setUser]=useState(null);
-        useEffect(() => {
-            
-                let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn)=>{
-                    if(isLoggedIn){
-                        setUser(isLoggedIn);
-                        console.log(isLoggedIn)
-                        console.log("love")
-                    }
-                });
-                console.log(user);
-            
-        }, [])
+       
+        const user=useSelector(state=>state.user.currentUser);
+        const isAdmin=user?._doc?.isAdmin;
     
        // useEffect(() => {
         //     if(db.collection("companies").doc(id).BuyPrice){
@@ -100,7 +91,7 @@ function Price({company,id}) {
                     </Segment>
                 
                    
-             { user&&(<div>
+             { isAdmin&&(<div>
               < Input
 
                   type="text"

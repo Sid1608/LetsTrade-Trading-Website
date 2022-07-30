@@ -5,6 +5,8 @@ const companyController=require("../controllers/companyController")
 const multer=require('multer');
 const path = require('path');
 //execute multer: dest-specifies folder where multer will try to store all incoming files
+// Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+//  It is written on top of busboy for maximum efficiency.
 const storage=multer.diskStorage({
     destination: function(req, file, cb) {
         fs.mkdir('./uploads/',(err)=>{

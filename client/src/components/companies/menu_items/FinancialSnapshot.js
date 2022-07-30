@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import "./css/Financial.css"
+import { useSelector } from 'react-redux';
 import firebase from "firebase"
 import axios from "axios"
 function FinancialSnapshot({company}) {
@@ -17,28 +18,8 @@ function FinancialSnapshot({company}) {
     const [url, setUrl]=useState("");
     const [image,setImage]=useState(null)
     const [id,setId]=useState(null)
-    const [user,setUser]=useState(null);
-    useEffect(() => {
-            
-        db.collection("companies").onSnapshot((snapshot) => {
-        
-            snapshot.docs.map((doc) =>{
-              if(doc.data().Name===company.Name){
-                setId(doc.id);
-              }
-            })
-          
-        });
-        let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn)=>{
-          if(isLoggedIn){
-              setUser(isLoggedIn);
-              console.log(isLoggedIn)
-              console.log("love")
-          }
-      });
-      console.log(user);
-        
-    }, [])
+    const user=useSelector(state=>state.user.currentUser);
+    const isAdmin=user?._doc?.isAdmin;
     // const [pe,setPE] = useState("");
     // const [ps, setPS] = useState("");
     // const [pb,setPB] = useState("");
@@ -132,7 +113,7 @@ function FinancialSnapshot({company}) {
         <Image src={company.FinancialSnapshot}/>
         </Segment>
 
-        {user&&(
+        {isAdmin&&(
         <Segment>
         <input type="file" onChange={handleChange} />
           {/* <Button onClick={AddImage}>Add Balancesheets</Button> */}

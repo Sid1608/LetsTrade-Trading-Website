@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGO_URL,err=>{
 
 
 //middleware
+app.use("/static",express.static("./uploads"))
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));

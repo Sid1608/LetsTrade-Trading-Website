@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import "./Header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeIcon from "@material-ui/icons/Home";
+import {useDispatch, useSelector} from 'react-redux';
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import InfoIcon from "@mui/icons-material/Info";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -16,7 +17,7 @@ import Companies from "../../pages/companies/Companies";
 import ContactUs from "../../pages/contact/ContactUs";
 import AdminLogin from "../admin/AdminLogin";
 import ChannelPartner from "../channelPartner/ChannelPartner";
-
+import { Logout } from "../../redux/apiCalls"
 /***Nav Links */
 const nav_links = [
   {
@@ -52,13 +53,16 @@ function Header(props) {
   const handleNavClick = (tab) => {
     window.location.replace(`${"/"}${tab["path"]}`);
   };
+  const user=useSelector(state=>state.user.currentUser);
+  const dispatch=useDispatch();
   const { match } = props;
   const handleLogout=()=>{
-    localStorage.removeItem("token")
+    // localStorage.removeItem("token")
     
-    localStorage.removeItem("isLoggedIn");
-    props.setUser(false)
-    console.log("in logout")
+    // localStorage.removeItem("isLoggedIn");
+    // props.setUser(false)
+    // console.log("in logout")
+    Logout(dispatch)
     window.location.reload()
   }
   return (

@@ -4,34 +4,18 @@ import firebase from 'firebase';
 import { storage, db} from "../../../firebase";
 import { Card, Input, Image, Header, Segment, Button } from 'semantic-ui-react'
 import "./css/ProfitAndLoss.css"
+import { useSelector } from 'react-redux';
 import axios from "axios"
 function ProfitAndLoss({profitloss,id}) {
     const [images,setImages] = useState([]);
     // const [profitloss,setpl]=useState([])
     const [upload,setUpload]=useState([]);
     const [url, setUrl]=useState("");
-    const [user,setUser]=useState(null);
+    const user=useSelector(state=>state.user.currentUser);
+    const isAdmin=user?._doc?.isAdmin;
     const [progress,setProgress]=useState(0);
     const [image,setImage]=useState(null);
-    useEffect(() => {
-      console.log(id);
-     
-      // if(id){
-      //   db.collection("companies").doc(id).get()
-      //   .then(snapshot => setpl(snapshot.data().ProfitAndLoss?snapshot.data().ProfitAndLoss:[]))
-      // }
-      
-      let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn)=>{
-        if(isLoggedIn){
-            setUser(isLoggedIn);
-            console.log(isLoggedIn)
-            console.log("love")
-        }
-    });
-    console.log(user);
-      
-  }, [])
-    
+  
     const handleChange =(e)=>{ 
         if(e.target.files[0]){
             setImage(e.target.files[0]);
@@ -101,7 +85,7 @@ function ProfitAndLoss({profitloss,id}) {
         }
         </Segment>
         {
-          user&&(<Segment>
+          isAdmin&&(<Segment>
         <progress className="imageupload__progress" value={progress} max="100" />
         <div>
           <input type="file" onChange={handleChange} />

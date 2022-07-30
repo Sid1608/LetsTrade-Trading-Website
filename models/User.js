@@ -2,15 +2,15 @@ const mongoose=require('mongoose');
 const jwt=require('jsonwebtoken');
 const joi=require('joi');
 const passwordComplexity=require('joi-password-complexity');
-const complexityOptions = {
-    min: 5,
-    max: 250,
-    lowerCase: 1,
-    upperCase: 1,
-    numeric: 1,
-    symbol: 1,
-    requirementCount: 2,
-  };
+// const complexityOptions = {
+//     min: 5,
+//     max: 250,
+//     lowerCase: 1,
+//     upperCase: 1,
+//     numeric: 1,
+//     symbol: 1,
+//     requirementCount: 2,
+//   };
 const UserSchema =new mongoose.Schema({
     firstName:{
         type:String,
@@ -20,13 +20,13 @@ const UserSchema =new mongoose.Schema({
         type:String,
         required:true
     },
-    // username:{
-    //     type:String,
-    //     require: true,
-    //     min:3,
-    //     max:20,
-    //     unique:true
-    // },
+    username:{
+        type:String,
+        require: true,
+        min:3,
+        max:20,
+        unique:true
+    },
     email:{
         type:String,
         required: true,
@@ -88,7 +88,8 @@ const validate=(data)=>{
         firstName:joi.string().required().label("First Name"),
         lastName:joi.string().required().label("Last Name"),
         email:joi.string().email().required().label("Email"),
-        password:passwordComplexity(complexityOptions).required().label("Password"),
+        password:passwordComplexity().required().label("Password"),
+        username:joi.string().required().min(3).max(50).label("Username"),
         // profilePicture:joi.string().label("Profile Picture"),
         // followers:joi.array().items(),
         // followings:joi.array().items(),

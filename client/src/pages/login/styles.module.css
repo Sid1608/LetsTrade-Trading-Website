@@ -125,3 +125,21 @@
 .google_btn > span{
     margin-left: 10px;
 }
+/* .error_msg{
+    color:red;
+} */
+.error_msg,
+.succ_msg {
+	width: 370px;
+	padding: 10px;
+	margin: 5px 0;
+	font-size: 14px;
+	background-color: #f34646;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.success_msg {
+	background-color: #5cdd5c;
+}

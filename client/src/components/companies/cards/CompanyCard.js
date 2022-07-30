@@ -7,9 +7,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import firebase from "firebase";
+import { useSelector } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import axios from "axios"
+
 
 
 import { Button, CardActionArea, CardActions } from "@mui/material";
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CompanyCard({ cards }) {
-  const [user, setUser] = useState(null);
+  
   const classes = useStyles();
   const [category,setCategory]=useState("Family Office")
   const [modalStyle] = useState(getModalStyle);
@@ -67,17 +69,9 @@ function CompanyCard({ cards }) {
   const [finaloption, setFinalOption] = useState("");
   const [company, setCompany] = useState("");
   console.log(cards);
-  useEffect(() => {
-    console.log(cards)
-    let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn) => {
-      if (isLoggedIn) {
-        setUser(isLoggedIn);
-        console.log(isLoggedIn);
-        console.log("love");
-      }
-    });
-    console.log(user);
-  }, []);
+  const user=useSelector(state=>state.user.currentUser);
+  const isAdmin=user?._doc?.isAdmin;
+ 
   const submitDetails = (event) => {
     event.preventDefault();
     setFinalOption(option);
@@ -204,15 +198,6 @@ function CompanyCard({ cards }) {
                     required
                   />
                 </div>
-
-                {/* <Input
-                       className="inputButton"
-                       placeholder="option"
-                       // type="hidden"
-                       name="option"
-                       value={option}
-                     /> */}
-
                 <Button
                   type="submit"
                   class="btn btn-dark btn-lg download-button"
@@ -235,7 +220,7 @@ function CompanyCard({ cards }) {
                   component="img"
                   height="140"
                   style={{ objectFit: "contain" }}
-                  image={`../../../../../uploads/${company.CompanyLogo.substring(8)}`}
+                  image={`http://localhost:8081/static/${company.CompanyLogo.substring(8)}`}
                   alt="green iguana"
                 />
                 
@@ -272,7 +257,7 @@ function CompanyCard({ cards }) {
                   >
                     Explore
                   </a>
-                  {user && (
+                  {isAdmin && (
                     <button
                       className="deletebtn"
                       onClick={(e) => {
@@ -283,7 +268,7 @@ function CompanyCard({ cards }) {
                           .catch(err=>{
                             console.log(err);
                           })
-                        // db.collection("companies").doc(company._id).delete();
+                    
                       }}
                     >
                       <DeleteIcon />

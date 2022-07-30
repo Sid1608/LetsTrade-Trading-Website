@@ -1,35 +1,31 @@
 import React, { useState, useEffect } from "react";
-import {Segment, Button } from "semantic-ui-react";
+import { Segment, Button } from "semantic-ui-react";
 import "./css/about.css";
-import {db } from "../../../firebase";
+import { db } from "../../../firebase";
 import firebase from "firebase";
 import axios from "axios";
-function About({ company}) {
-  console.log(company)
+import { useSelector } from 'react-redux';
+function About({ company }) {
+  console.log(company);
   const [about, setAbout] = useState("");
   const [id, setId] = useState(null);
-  const [user, setUser] = useState(null);
+  const user=useSelector(state=>state.user.currentUser);
+  const isAdmin=user?._doc?.isAdmin;
 
   useEffect(() => {
-  
-    let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn) => {
-      if (isLoggedIn) {
-        setUser(isLoggedIn);
-        console.log(isLoggedIn);
-      }
-    });
     console.log(user);
   }, []);
 
   const updateAbout = () => {
     console.log(company._id);
-    axios.patch(`http://localhost:8081/api/company/updateAboutUs/${company._id}`)
-                .then(response=>{
-                    console.log(response)
-                })
-                .catch(err=>{
-                    console.log(err)
-                 })   
+    axios
+      .patch(`http://localhost:8081/api/company/updateAboutUs/${company._id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // db.collection("companies").doc(id).update({
     //   About: about,
     // });
@@ -46,7 +42,7 @@ function About({ company}) {
         <div dangerouslySetInnerHTML={{ __html: company.About }}></div>
       </Segment>
 
-      {user && (
+      {isAdmin && (
         <div>
           <textarea
             placeholder="About Company"

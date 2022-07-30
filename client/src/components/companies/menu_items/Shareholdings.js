@@ -5,35 +5,17 @@ import FormData from 'form-data'
 import { Header, Image, Segment,Button,Input } from 'semantic-ui-react'
 import { storage, db} from "../../../firebase";
 import axios from "axios"
+import { useSelector } from 'react-redux';
 // import {PieChart,Pie,Tooltip} from "recharts";
 function Shareholdings({company,id}) {
-    const [user,setUser]=useState(null); 
+    
     const [Snapshots,setSnapshots] = useState("");
     const [url, setUrl]=useState("");
     const [image,setImage]=useState(null)
-
+    const user=useSelector(state=>state.user.currentUser);
+    const isAdmin=user?._doc?.isAdmin;
     // const [id,setId]=useState(null)
-    useEffect(() => {
-            
-        // db.collection("companies").onSnapshot((snapshot) => {
-        
-        //     snapshot.docs.map((doc) =>{
-        //       if(doc.data().Name===company.Name){
-        //         setId(doc.id);
-        //       }
-        //     })
-          
-        // });
-        let isLoggedIn = firebase.auth().onAuthStateChanged((isLoggedIn)=>{
-            if(isLoggedIn){
-                setUser(isLoggedIn);
-                console.log(isLoggedIn)
-                console.log("love")
-            }
-        });
-        console.log(user);
-        
-    }, [])
+    
     const handleChange =(e)=>{ 
         if(e.target.files[0]){
             setImage(e.target.files[0]);
@@ -86,7 +68,7 @@ function Shareholdings({company,id}) {
                 </Segment>
 
 
-                { user&&(<Segment>
+                { isAdmin&&(<Segment>
         <input type="file" onChange={handleChange} />
           {/* <Button onClick={AddImage}>Add Balancesheets</Button> */}
           <Button className="imageupload__button" onClick={AddImage}>

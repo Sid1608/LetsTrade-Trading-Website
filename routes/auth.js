@@ -3,6 +3,9 @@ const {User,validate}=require("../models/User");
 const joi=require("joi")
 const bcrypt = require("bcrypt");//asynchronous function 
 const passwordComplexity=require('joi-password-complexity');
+const sendEmail = require("../utils/sendEmail");
+const Token = require("../models/token");
+const crypto = require("crypto");
 const jwt=require("jsonwebtoken");
 //Register
 
@@ -26,7 +29,13 @@ router.post("/register",async(req,res)=>{
       password:hashedPassword
     })
     const newuser=await newUser.save();
-    res.status(201).send({message:"User created Successfully"})
+    const token=await new Token({
+      userId:newUser._id,
+      token:crypto.randomBytes(32).toString("hex")
+    }).save();
+    const url = `${process.env.BASE_URL}users/${newUser._id}/verify/${token.token}`;
+		await sendEmail(newUser.email, "Verify Email", url);
+    res.status(201).send({message:"An email sent to your account please veriy it"})
 
   }catch(error){
     console.log(error);
@@ -46,24 +55,56 @@ router.post("/login",async(req,res)=>{
     }
     const validPassword=await bcrypt.compare(req.body.password,user.password);
     !validPassword && res.status(401).json("Invalid Email or Password")
+    if (!user.verified) {
+			let token = await Token.findOne({ userId: user._id });
+			if (!token) {
+				token = await new Token({
+					userId: user._id,
+					token: crypto.randomBytes(32).toString("hex"),
+				}).save();
+				const url = `${process.env.BASE_URL}users/${user.id}/verify/${token.token}`;
+				await sendEmail(user.email, "Verify Email", url);
+			}
+
+			return res
+				.status(400)
+				.send({ message: "An Email sent to your account please verify" });
+		}
     const token=user.generateAuthToken();
-    res.cookie("jwt",token,{
-      expires:new Date(Date.now()+3000000),
-      httpOnly:true
-    })
+    
     console.log(token)
-    res.status(200).send({data:token,message:"Logged in successfully"})
+    res.status(200).send({token,...user})
     
   }catch(error){
     console.log(error)
     res.status(500).json({message:"INternal Server Error"})
   }
 })
+router.get("/:id/verify/:token/", async (req, res) => {
+	try {
+		const user = await User.findOne({ _id: req.params.id });
+		if (!user) return res.status(400).send({ message: "Invalid link" });
+
+		const token = await Token.findOne({
+			userId: user._id,
+			token: req.params.token,
+		});
+		if (!token) return res.status(400).send({ message: "Invalid link" });
+
+		await User.updateOne({ _id: user._id, verified: true });
+		await token.remove();
+
+		res.status(200).send({ message: "Email verified successfully" });
+	} catch (error) {
+		res.status(500).send({ message: "Internal Server Error" });
+	}
+});
 
 const validateUser=(data)=>{
   const schema=joi.object({
     email:joi.string().email().required().label("Email"),
     password:passwordComplexity().required().label("Password"),
+    // verified: joi.boolean().valid(true).required().label("Email Verification"),
   })
   return schema.validate(data);
 }

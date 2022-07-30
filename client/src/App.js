@@ -22,7 +22,7 @@ import Signup from "./pages/signup/Signup";
 import ForgotPassword from "./components/forgotPassword/ForgotPassword";
 import PasswordReset from "./components/passwordReset/PasswordReset";
 import EmailVerify from "./components/emailVerify/EmailVerify";
-
+import { useSelector } from 'react-redux';
 const nav_links = [
   {
     label: "Home",
@@ -57,22 +57,24 @@ const nav_links = [
 ];
 
 function App(props) {
-  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
-  const [user, setUser] = useState(false);
+  // const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+  // const [user, setUser] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const user=useSelector(state=>state.user.currentUser);
+  console.log(user);
 //  console.log(props.match.path);
   // const handleNavClick = (tab) => {
   //   window.location.replace(`${props.match.path}${tab["path"]}`);
   // };
   const { match } = props;
   // const user=false
-  useEffect(() => {
-    if (localStorage.getItem("isLoggedIn")===true) {
-      setUser(true);
-      // setIsAdmin(JSON.parse(localStorage.getItem("isAdmin")));
-    }
-  },[]);
-  console.log(user);
+  // useEffect(() => {
+  //   if (localStorage.getItem("isLoggedIn")===true) {
+  //     setUser(true);
+  //     // setIsAdmin(JSON.parse(localStorage.getItem("isAdmin")));
+  //   }
+  // },[]);
+  // console.log(user);
 
   return (
     <BrowserRouter>
@@ -80,7 +82,7 @@ function App(props) {
       {
         user&&(
         <div style={{margin:"65px"}}>
-          <Header setUser={setUser}/>
+          <Header/>
         </div>)
       }
       <Routes>
@@ -95,7 +97,7 @@ function App(props) {
                 <Route exact path="/blogs" element={<Blogs/>}/>
                 <Route exact path="/disclaimer" element={<Disclaimer/>}/>
                 {/* <Route exact path="/login" element={<Login/>}/> */}
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+                {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
                 <Route path="/password-reset/:id/:token" element={<PasswordReset />} />
                 <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
 
@@ -110,8 +112,9 @@ function App(props) {
               <Route exact path="/about" element={<Navigate replace to="/login"/>}/>
               <Route exact path="/blogs" element={<Navigate replace to="/login"/>}/>
               <Route exact path="/disclaimer" element={<Navigate replace to="/login"/>}/>
-              <Route exact path="/login" element={<Login setUser={setUser} setIsAdmin={setIsAdmin}/>}/>
+              <Route exact path="/login" element={<Login />}/>
               <Route exact path="/signup" element={<Signup/>}/>
+              <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/password-reset/:id/:token" element={<PasswordReset />} />
               <Route path="/users/:id/verify/:token" element={<EmailVerify />} />
