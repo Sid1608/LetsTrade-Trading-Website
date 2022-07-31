@@ -37,15 +37,27 @@ const  postsSlice = createSlice({
         addPostsStart:(state)=>{
             state.isFetching=true;
             state.isFetching=false;
-           },
-           addPostsSuccess:(state,action)=>{
+        },
+        addPostsSuccess:(state,action)=>{
+        state.isFetching=true;
+        state.allPosts.push(action.payload)
+        },
+        addPostsFailure:(state)=>{
+        state.isFetching=false;
+        state.error=true;
+        },
+        likePostsStart:(state)=>{
             state.isFetching=true;
-            state.allPosts.push(action.payload)
-           },
-           addPostsFailure:(state)=>{
             state.isFetching=false;
-            state.error=true;
-           }
+        },
+        likePostsSuccess:(state,action)=>{
+        state.isFetching=true;
+        state.allPosts.push(action.payload)
+        },
+        likePostsFailure:(state)=>{
+        state.isFetching=false;
+        state.error=true;
+        }
         
     },
 })

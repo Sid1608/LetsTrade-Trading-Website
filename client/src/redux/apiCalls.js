@@ -1,5 +1,5 @@
 import { loginFailure, loginStart, loginSuccess,logout } from "./userRedux"
-import {companyFailure, companyStart, companySuccess} from "./companyRedux"
+import {addCompanyFailure, addCompanyStart, addCompanySuccess, companyFailure, companyStart, companySuccess, deleteCompanyFailure, deleteCompanyStart, deleteCompanySuccess} from "./companyRedux"
 import {companyAllFailure, companyAllStart, companyAllSuccess} from "./companyRedux"
 import {publicRequest} from "../axios";
 import { registerSuccess } from './userRedux';
@@ -68,7 +68,7 @@ export const register = async (dispatch, user) => {
     }
   };
 
-
+/**************Company*******************************/
   export const getCompany=async(dispatch,id)=>{
     dispatch(companyStart());
     try {
@@ -93,6 +93,77 @@ export const register = async (dispatch, user) => {
     
     }
   }
+  export const addCompany=async (dispatch,formData)=>{
+    dispatch(addCompanyStart());
+    try {
+        const res=await publicRequest.post("/company/addCompany",formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        dispatch(addCompanySuccess(res.data.company))
+        
+    }catch(error){
+        
+        dispatch(addCompanyFailure())
+    
+    }
+  }
+  //for update about, buy and sell price
+  export const updateCompany=async(dispatch,query,id,data)=>{
+    // dispatch(deleteCompanyStart());
+    try {
+      console.log(data)
+        const res=await publicRequest.patch(`/company/${query}/${id}`,data)
+        // console.log(res);
+        alert("updated succesfully")
+        // dispatch(deleteCompanySuccess(id))
+        
+    }catch(error){
+        console.log(error)
+        // dispatch(deleteCompanyFailure())
+    
+    }
+  }
+  //for uploading company documents like shareholidng, reports, financial snapshots
+  export const uplodDocument=async(dispatch,query,id,data)=>{
+    // dispatch(deleteCompanyStart());
+    try {
+      
+      console.log(data)
+        const res=await publicRequest.post(`/company/${query}/${id}`,data,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        // console.log(res);
+        alert("updated succesfully")
+        // dispatch(deleteCompanySuccess(id))
+        
+    }catch(error){
+        console.log(error)
+        // dispatch(deleteCompanyFailure())
+    
+    }
+  }
+  export const deleteCompany=async (dispatch,id)=>{
+    dispatch(deleteCompanyStart());
+    try {
+        const res=await publicRequest.delete(`/company/deleteCompany/${id}`)
+        // console.log(res);
+        dispatch(deleteCompanySuccess(id))
+        
+    }catch(error){
+        console.log(error)
+        dispatch(deleteCompanyFailure())
+    
+    }
+  }
+
+
+
+
+  /**************Posts*******************************/
   export const getAllPosts=async(dispatch)=>{
     dispatch(postsAllStart());
     try {
