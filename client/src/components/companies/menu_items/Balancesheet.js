@@ -5,7 +5,8 @@ import firebase from "firebase"
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { Card, Input, Image, Header, Segment, Button } from 'semantic-ui-react'
 import axios from "axios"
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { uplodDocument } from '../../../redux/apiCalls';
 
 function Balancesheet({ balancesheets,id}) {
     const [images,setImages] = useState([]);
@@ -15,9 +16,11 @@ function Balancesheet({ balancesheets,id}) {
     const [url, setUrl]=useState("");
     const [progress,setProgress]=useState(0);
     const [image,setImage]=useState(null);
+  const dispatch=useDispatch()
     
     const user=useSelector(state=>state.user.currentUser);
   const isAdmin=user?._doc?.isAdmin;
+  const currentCompany=useSelector((state) => state.company.currentCompany);
     
     const handleChange =(e)=>{ 
         if(e.target.files[0]){
@@ -27,54 +30,10 @@ function Balancesheet({ balancesheets,id}) {
     const AddImage = () => {
       if(image){
         var formData = new FormData();
-      formData.append("Shareholdings",image);
-     axios.post("http://localhost:8080/api/company/UploadShareHoldings",formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-        }
-        }).then(response=>{
-            console.log(response)
-            }).catch(err=>{
-            console.log(err);
-            })
-        alert("data added");
-        // const uploadTask = storage.ref(`balanceSheets/${id}${image.name}`).put(image);
-        //  /**Accessing storage in firebase */
-        // uploadTask.on(
-        //   "state_changed",
-        //   (snapshot) => {
-        //     // progress function ...
-        //     const progress = Math.round(
-        //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        //     );
-        //     setProgress(progress);
-        //   },
-        //   (error) => {
-        //     // Error function ...
-        //     console.log(error);
-        //     alert(error.message)
-        //   },
-        //   () => {
-        //     // complete function ...
-        //     storage
-        //       .ref("balanceSheets")
-        //       .child(`${id}${image.name}`)
-        //       .getDownloadURL()
-        //       .then((url) => {
-        //         setUrl(url);
-        //         var documentRef = db.collection("companies").doc(id)
-
-        //         documentRef.update({
-        //            Balancesheets: firebase.firestore.FieldValue.arrayUnion(url)
-        //         });
-        //         setProgress(0);
-        //         setUrl("");
-        //         setImage(null)
-               
-        //       });
-        //   }
-        // );
-        // alert("added");
+        formData.append("Shareholdings",image);
+      uplodDocument(dispatch,"uploadAnnualReports",currentCompany._id,formData)
+      
+       
         return <Navigate to={`${"/companies/"}${id}`} />
 
         }else{

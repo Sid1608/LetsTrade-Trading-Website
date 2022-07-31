@@ -6,16 +6,15 @@ import firebase from "firebase";
 import { storage, db } from "../../../firebase";
 import { Input, Image, Segment, Button } from "semantic-ui-react";
 import axios from "axios"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCompany, uplodDocument } from "../../../redux/apiCalls";
 
 function AnnualReport({ pdfs, id }) {
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState("");
-  const [Reports, setReports] = useState("");
-  const [report, setReport] = useState("");
-  
-  const [url, setUrl] = useState("");
+  const dispatch=useDispatch()
   const [image, setImage] = useState(null);
+  const currentCompany=useSelector((state) => state.company.currentCompany);
 
   /********************************UseEffect*/
   const user=useSelector(state=>state.user.currentUser);
@@ -29,55 +28,8 @@ function AnnualReport({ pdfs, id }) {
 
   const handleUpload = () => {
     var formData = new FormData();
-      formData.append("Shareholdings",image);
-     axios.post("http://localhost:8080/api/company/UploadShareHoldings",formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-        }
-        }).then(response=>{
-            console.log(response)
-            }).catch(err=>{
-            console.log(err);
-            })
-        alert("data added");
-    const uploadTask = storage.ref(`pdfs/${id}${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progress function ...
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        // Error function ...
-        console.log(error);
-        alert(error.message);
-      },
-      () => {
-        storage
-          .ref("pdfs")
-          .child(`${id}${image.name}`)
-          .getDownloadURL()
-          .then((url) => {
-            setUrl(url);
-            var documentRef = db.collection("companies").doc(id);
-            documentRef.update({
-              AnnualReports: firebase.firestore.FieldValue.arrayUnion({
-                caption: caption,
-                report: url,
-              }),
-            });
-            setUrl("");
-            setCaption("");
-            setReport("");
-            setProgress(0);
-            setImage(null);
-          });
-      }
-    );
-    // alert("added")
+    formData.append("AnnualReports",image);
+    uplodDocument(dispatch,"uploadAnnualReports",currentCompany._id,formData)
   };
 
 
@@ -96,16 +48,16 @@ function AnnualReport({ pdfs, id }) {
 
       <Segment>
         <h1>Annual Reports</h1>
-        {pdfs?.map((report, index) => {
+        {currentCompany?.AnnualReports?.map((report, index) => {
           return (
-            <a href={report.report} target="_blank">
+            <a href={report} target="_blank">
               <h4 style={{ margin: "50px", marginLeft: "10px" }}>
                 <Image
                   align="left"
                   size="mini"
                   src="https://cdn-icons-png.flaticon.com/512/136/136522.png"
                 />
-                {report.caption}
+                {"click here"}
               </h4>
             </a>
           );

@@ -4,8 +4,9 @@ import firebase from 'firebase';
 import { storage, db} from "../../../firebase";
 import { Card, Input, Image, Header, Segment, Button } from 'semantic-ui-react'
 import "./css/ProfitAndLoss.css"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios"
+import { uplodDocument } from '../../../redux/apiCalls';
 function ProfitAndLoss({profitloss,id}) {
     const [images,setImages] = useState([]);
     // const [profitloss,setpl]=useState([])
@@ -13,8 +14,12 @@ function ProfitAndLoss({profitloss,id}) {
     const [url, setUrl]=useState("");
     const user=useSelector(state=>state.user.currentUser);
     const isAdmin=user?._doc?.isAdmin;
+  const currentCompany=useSelector((state) => state.company.currentCompany);
+
     const [progress,setProgress]=useState(0);
     const [image,setImage]=useState(null);
+  const dispatch=useDispatch()
+
   
     const handleChange =(e)=>{ 
         if(e.target.files[0]){
@@ -24,50 +29,10 @@ function ProfitAndLoss({profitloss,id}) {
     const AddImage = () => {
       var formData = new FormData();
       formData.append("ProfitAndLoss",image);
-     axios.post("http://localhost:8080/api/company/ProfitAndLoss",formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-        }
-        }).then(response=>{
-            console.log(response)
-            }).catch(err=>{
-            console.log(err);
-            })
-        alert("data added");
-        // const uploadTask = storage.ref(`profitAndLoss/${id}${image.name}`).put(image);
-        
-        // uploadTask.on(
-        //   "state_changed",
-        //   (snapshot) => {
-        //     const progress = Math.round(
-        //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        //     );
-        //     setProgress(progress);
-        //   },
-        //   (error) => {
-        //     console.log(error);
-        //     alert(error.message)
-        //   },
-        //   () => {
-        //     storage
-        //       .ref("profitAndLoss")
-        //       .child(`${id}${image.name}`)
-        //       .getDownloadURL()
-        //       .then((url) => {
-        //         setUrl(url);
-        //         var documentRef = db.collection("companies").doc(id)
+      uplodDocument(dispatch,"ProfitAndLoss",currentCompany._id,formData)
 
-        //         documentRef.update({
-        //            ProfitAndLoss: firebase.firestore.FieldValue.arrayUnion(url)
-        //         });
-        //         setProgress(0);
-        //         setUrl("");
-        //         setImage(null)
-               
-        //       });
-        //   }
-        // );
-        alert("added")
+     
+       
     }
    
    

@@ -6,15 +6,14 @@ import { Input } from "semantic-ui-react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import firebase from "firebase";
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import axios from "axios"
 
 
 
 import { Button, CardActionArea, CardActions } from "@mui/material";
+import { deleteCompany } from "../../../redux/apiCalls";
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -70,8 +69,11 @@ function CompanyCard({ cards }) {
   const [company, setCompany] = useState("");
   console.log(cards);
   const user=useSelector(state=>state.user.currentUser);
+  const dispatch=useDispatch();
   const isAdmin=user?._doc?.isAdmin;
  
+
+
   const submitDetails = (event) => {
     event.preventDefault();
     setFinalOption(option);
@@ -79,6 +81,8 @@ function CompanyCard({ cards }) {
     window.location.href=`https://api.whatsapp.com/send?phone=919892477213&text=Name%20=%20${username}%20Category%20=%20${category}%20MobileNo%20=%20${mobileNo}%20Email%20=%20${email}%20wants%20to%20${bs}%20${quantity}%20Quantity%20of%20Company%20=%20${company}`
     setOption("");
   };
+
+  
   return (
     <div>
       <Modal open={open} onClose={() => setOpen(false)}>
@@ -261,13 +265,7 @@ function CompanyCard({ cards }) {
                     <button
                       className="deletebtn"
                       onClick={(e) => {
-                        axios.delete(`http://localhost:8081/api/company/deleteCompany/${company._id}`)
-                          .then(response=>{
-                            console.log(response);
-                          })
-                          .catch(err=>{
-                            console.log(err);
-                          })
+                        deleteCompany(dispatch,company._id)
                     
                       }}
                     >

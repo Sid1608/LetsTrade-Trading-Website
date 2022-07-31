@@ -3,13 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { Component, useState, useEffect } from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FormData from 'form-data'
-import axios from 'axios'
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { storage, db} from "../../../firebase";
-import firebase from "firebase";
+import Modal from '@mui/material/Modal'
 import "./AddCompany.css";
+import { addCompany } from '../../../redux/apiCalls';
+import { useDispatch } from 'react-redux';
 
 function getModalStyle() {
     const top = 50 ;
@@ -52,14 +50,14 @@ function AddCompany() {
     const classes=useStyles();
     const [modalStyle]=useState(getModalStyle);
     const [open, setOpen]=useState(false);
-    const [user,setUser]=useState(null);
-    const [url, setUrl]=useState("");
     const [companyDetails,setCompanyDetails]=useState({
         companyName:"",ISIN:"",Quote:"",logo:null,category:""
     });
+    const dispatch = useDispatch();
+
+
     const handleFileUpload =(e)=>{
      
-        
         if(e.target.files[0]){
         
             setCompanyDetails({ ...companyDetails, logo: e.target.files[0]});
@@ -68,34 +66,24 @@ function AddCompany() {
     
   };
 
-    // const handleFileUpload = async (e) => {
-    //     const file = e.target.files[0];
-    //     setCompanyDetails({ ...companyDetails, logo: file });
-    //   };
+
      let name,value
      const handleInputs=(e)=>{
         name=e.target.name;
         value=e.target.value;
-        console.log(e)
+        console.log(companyDetails)
         setCompanyDetails({...companyDetails,[name]:value})
 
      }
-    const submitDetails=()=>{
+    const submitDetails=async()=>{
       var formData = new FormData();
       formData.append("CompanyLogo",companyDetails.logo);
       formData.append("CompanyName",companyDetails.companyName);
       formData.append("Category",companyDetails.category);
-     axios.post("http://localhost:8080/api/company/addCompany",formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-  }).then(response=>{
-       console.log(response)
-     }).catch(err=>{
-       console.log(err);
-     })
-        alert("data added");
-        setOpen(false);
+      console.log(formData);
+      addCompany(dispatch,formData);
+      alert("company added Successfully");
+      setOpen(false);
     }
 
 

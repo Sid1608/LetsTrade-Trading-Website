@@ -4,26 +4,20 @@ import "./css/price.css"
 import { storage, db} from "../../../firebase";
 import axios from "axios";
 import firebase from "firebase"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Price({company,id}) {
         
         const [bp,setbp]=useState(0.00);
         const [sp,setsp]=useState(0.00)
-
+  const dispatch=useDispatch()
+  const currentCompany=useSelector((state) => state.company.currentCompany);
+        
        
         const user=useSelector(state=>state.user.currentUser);
         const isAdmin=user?._doc?.isAdmin;
     
-       // useEffect(() => {
-        //     if(db.collection("companies").doc(id).BuyPrice){
-        //         setbp(db.collection("companies").doc(id).BuyPrice)
-        //     }
-        //     if(db.collection("companies").doc(id).SellPrice){
-        //         setsp(db.collection("companies").doc(id).SellPrice)
-        //     }
-            
-        // }, []);
+      
         const updateBuyingPrice=()=>{
             axios.patch(`http://localhost:8080/api/company/updateBuyPrice/${id}`)
                 .then(response=>{

@@ -10,13 +10,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import "./css/Financial.css"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase"
 import axios from "axios"
+import { uplodDocument } from '../../../redux/apiCalls';
 function FinancialSnapshot({company}) {
     const [Snapshots,setSnapshots] = useState("");
     const [url, setUrl]=useState("");
     const [image,setImage]=useState(null)
+    const dispatch=useDispatch()
+    const currentCompany=useSelector((state) => state.company.currentCompany);
+    
     const [id,setId]=useState(null)
     const user=useSelector(state=>state.user.currentUser);
     const isAdmin=user?._doc?.isAdmin;
@@ -70,41 +74,8 @@ function FinancialSnapshot({company}) {
     const AddImage = () => {
       var formData = new FormData();
       formData.append("FinancialSnapshot",image);
-     axios.post("http://localhost:8080/api/company/UploadFinancialSnapshot",formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-        }
-        }).then(response=>{
-            console.log(response)
-            }).catch(err=>{
-            console.log(err);
-            })
-        alert("data added");
-        // const uploadTask = storage.ref(`financialSnapshots/${id}${image.name}`).put(image);
-        //  /**Accessing storage in firebase */
-        // uploadTask.on(
-        //   "state_changed",
-        //   () => {
-        //     // complete function ...
-        //     storage
-        //       .ref("financialSnapshots")
-        //       .child(`${id}${image.name}`)
-        //       .getDownloadURL()
-        //       .then((url) => {
-        //         setUrl(url);
-        //         // setSnapshots(url)
-        //         console.log(id);
-        //         db.collection("companies").doc(id).update({
-        //           FinancialSnapshot:url
-        //         });
-                
-        //         setUrl("");
-        //         setImage(null)
-               
-        //       });
-        //   }
-        // );
-        alert("added")
+    uplodDocument(dispatch,"UploadFinancialSnapshot",currentCompany._id,formData)
+
     }
    
     return (

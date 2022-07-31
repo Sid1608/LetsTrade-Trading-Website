@@ -4,12 +4,14 @@ import "./css/about.css";
 import { db } from "../../../firebase";
 import firebase from "firebase";
 import axios from "axios";
-import { useSelector } from 'react-redux';
-function About({ company }) {
-  console.log(company);
+import { useSelector,useDispatch } from 'react-redux';
+import { updateCompany } from "../../../redux/apiCalls";
+function About() {
+
   const [about, setAbout] = useState("");
   const [id, setId] = useState(null);
   const user=useSelector(state=>state.user.currentUser);
+  const dispatch=useDispatch()
   const currentCompany=useSelector((state) => state.company.currentCompany);
   const isAdmin=user?._doc?.isAdmin;
 
@@ -18,15 +20,17 @@ function About({ company }) {
   }, []);
 
   const updateAbout = () => {
-    console.log(company._id);
-    axios
-      .patch(`http://localhost:8081/api/company/updateAboutUs/${company._id}`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    updateCompany(dispatch,"updateAboutUs",currentCompany._id,{
+      about:about
+    });
+    // axios
+    //   .patch(`http://localhost:8081/api/company/updateAboutUs/${company._id}`)
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     // db.collection("companies").doc(id).update({
     //   About: about,
     // });

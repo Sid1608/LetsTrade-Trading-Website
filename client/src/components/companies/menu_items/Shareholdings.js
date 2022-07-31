@@ -5,13 +5,18 @@ import FormData from 'form-data'
 import { Header, Image, Segment,Button,Input } from 'semantic-ui-react'
 import { storage, db} from "../../../firebase";
 import axios from "axios"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { uplodDocument } from '../../../redux/apiCalls'
 // import {PieChart,Pie,Tooltip} from "recharts";
 function Shareholdings({company,id}) {
     
     const [Snapshots,setSnapshots] = useState("");
     const [url, setUrl]=useState("");
     const [image,setImage]=useState(null)
+    const dispatch=useDispatch()
+    const currentCompany=useSelector((state) => state.company.currentCompany);
+
+
     const user=useSelector(state=>state.user.currentUser);
     const isAdmin=user?._doc?.isAdmin;
     // const [id,setId]=useState(null)
@@ -24,41 +29,7 @@ function Shareholdings({company,id}) {
     const AddImage = () => {
         var formData = new FormData();
       formData.append("Shareholdings",image);
-     axios.post("http://localhost:8080/api/company/UploadShareHoldings",formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data'
-        }
-        }).then(response=>{
-            console.log(response)
-            }).catch(err=>{
-            console.log(err);
-            })
-        alert("data added");
-        // const uploadTask = storage.ref(`shareHoldings/${id}${image.name}`).put(image);
-        //  /**Accessing storage in firebase */
-        // uploadTask.on(
-        //   "state_changed",
-        //   () => {
-        //     // complete function ...
-        //     storage
-        //       .ref("shareHoldings")
-        //       .child(`${id}${image.name}`)
-        //       .getDownloadURL()
-        //       .then((url) => {
-        //         setUrl(url);
-        //         // setSnapshots(url)
-        //         console.log(id);
-        //         db.collection("companies").doc(id).update({
-        //           Shareholding:url
-        //         });
-                
-        //         setUrl("");
-        //         setImage(null)
-               
-        //       });
-        //   }
-        // );
-        alert("Item added")
+      uplodDocument(dispatch,"UploadShareHoldings",currentCompany._id,formData);
     }
         return (
             <div id="company-about-container" style={{width:"955px"}}>
